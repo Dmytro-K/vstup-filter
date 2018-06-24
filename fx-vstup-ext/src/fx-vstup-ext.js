@@ -15,23 +15,31 @@ function main()
     })();
 
     // document.body.querySelectorAll('*').forEach(x => x.style.backgroundColor = '#BB0000');
-    var el;
-    el = document.getElementById('myRedBox');
-    if (!el)
+
+    const red_box_enable = false;
+    var red_box;
+
+    if (false != red_box_enable)
     {
-        el = document.createElement('div');
-        el.id = "myRedBox";
-        el.style.backgroundColor = '#BB0000';
-        el.style.position = 'fixed';
-        el.style.left = '100px';
-        el.style.bottom = '100px';
-        el.style.width = '100px';
-        el.style.height = '100px';
-        el.style.zIndex = '999';
-        el.style.display = 'none';
+        red_box = document.getElementById('myRedBox');
+        if (!red_box)
+        {
+            red_box = document.createElement('div');
+            red_box.id = "myRedBox";
+            red_box.style.backgroundColor = '#BB0000';
+            red_box.style.position = 'fixed';
+            red_box.style.left = '100px';
+            red_box.style.bottom = '100px';
+            red_box.style.width = '100px';
+            red_box.style.height = '100px';
+            red_box.style.zIndex = '999';
+            red_box.style.display = 'none';
+        }
+        document.body.appendChild(red_box);
     }
-    document.body.appendChild(el);
+
     console.log("dad");
+
     var badItems = Array.prototype.slice.call(
         document.getElementById('legend').previousElementSibling.querySelectorAll('tr'))
         .filter(x => ((y => y[y.length-1].innerHTML == '—')(x.childNodes)))
@@ -41,20 +49,30 @@ function main()
     // badItems.forEach(x => x.style.display = 'none');
 
     // browser.browserAction.setTitle({title: "ggggggg"});
-    el.addEventListener('click', function (e) {
-        browser.runtime.sendMessage({url: e.target.id});
-    });
+
+    if (false != red_box_enable)
+    {
+        red_box.addEventListener('click', function (e) {
+            browser.runtime.sendMessage({url: e.target.id});
+        });
+    }
 
     function state_set(state)
     {
         if (state)
         {
-            el.style.display = 'block';
+            if (false != red_box_enable)
+            {
+                red_box.style.display = 'block';
+            }
             badItems.forEach(x => x.style.display = 'none');
         }
         else
         {
-            el.style.display = 'none';
+            if (false != red_box_enable)
+            {
+                red_box.style.display = 'none';
+            }
             badItems.forEach(x => x.style.display = 'table-row');
         }
     }
@@ -63,16 +81,6 @@ function main()
     {
         stateState = !stateState;
         console.log("stateState: ", stateState);
-        // if (stateState)
-        // {
-        //     el.style.display = 'block';
-        //     badItems.forEach(x => x.style.display = 'none');
-        // }
-        // else
-        // {
-        //     el.style.display = 'none';
-        //     badItems.forEach(x => x.style.display = 'table-row');
-        // }
         state_set(stateState);
     }
 
