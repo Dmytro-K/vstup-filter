@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "fx-vstup-ext",
-    "version": "0.9.6",
+    "version": "0.9.12",
 
     "icons": {
         "16": "favicon.png"
