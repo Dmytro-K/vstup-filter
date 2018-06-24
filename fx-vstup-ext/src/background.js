@@ -50,8 +50,26 @@ function init_image_data(cb=null)
     image.src = "favicon.png";
 }
 
+function tabs_query(query_info, func_ok, func_err)
+{
+    if (typeof chrome === 'undefined')
+    {
+        return browser.tabs.query(query_info).then(func_ok, func_err);
+    }
+    else
+    {
+        return browser.tabs.query(query_info, func_ok);
+    }
+}
+
 function main()
 {
+    window.browser = (function () {
+        return window.msBrowser ||
+            window.browser ||
+            window.chrome;
+    })();
+
     var enabled = false;
 
     // browser.tabs.query({active: true, currentWindow: true, url: "*://*.vstup.info/*"});
@@ -71,19 +89,18 @@ function main()
         // browser.browserAction.setIcon({path: {16: enabled ? "favicon.png" : "favicon-gray.png"}});
         // getImageData(x => browser.browserAction.setIcon({imageData: x}));
         browser.browserAction.setIcon({imageData: {16: enabled ? gray_icon_data : color_icon_data}});
-
-        browser.tabs.query({active: true, currentWindow: true, url: "*://*.vstup.info/*"})
-            .then(
-                function (tabs) {
-                    tabs.forEach(function (tab) {
-                        console.log(tab.url);
-                        browser.tabs.sendMessage(tab.id, {command: 3, data: enabled});
-                    });
-                },
-                function onError(error) {
-                    console.log(`Error: ${error}`);
-                }
-            );
+        
+        tabs_query({active: true, currentWindow: true, url: "*://*.vstup.info/*"},
+            function (tabs) {
+                tabs.forEach(function (tab) {
+                    console.log(tab.url);
+                    browser.tabs.sendMessage(tab.id, {command: 3, data: enabled});
+                });
+            },
+            function onError(error) {
+                console.log(`Error: ${error}`);
+            }
+        );
     }
 
     browser.browserAction.onClicked.addListener(vstup_button_click_handler);

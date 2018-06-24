@@ -8,6 +8,12 @@ function main()
         return 0;
     }
 
+    window.browser = (function () {
+        return window.msBrowser ||
+            window.browser ||
+            window.chrome;
+    })();
+
     // document.body.querySelectorAll('*').forEach(x => x.style.backgroundColor = '#BB0000');
     var el;
     el = document.getElementById('myRedBox');
