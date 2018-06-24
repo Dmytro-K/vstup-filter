@@ -1,0 +1,32 @@
+{
+    "manifest_version": 2,
+    "name": "fx-vstup-ext",
+    "version": "1.0",
+
+    "icons": {
+        "16": "favicon.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*.vstup.info/*"],
+            "js": ["fx-vstup-ext.js"]
+        }
+    ],
+
+    "browser_action": {
+        "default_icon": {
+            "16": "favicon.png"
+        },
+        "default_title": "fx-vstup-ext-ggg"
+    },
+
+    "background": {
+        "scripts": ["background.js"]
+    },
+
+    "permissions": [
+        "notifications",
+        "tabs"
+    ]
+}

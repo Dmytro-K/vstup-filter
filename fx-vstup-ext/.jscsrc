@@ -1,0 +1,4 @@
+{
+    "fileExtensions": [".js", "jscs"],
+    "validateIndentation": 4
+}
