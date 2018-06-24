@@ -70,7 +70,7 @@ function main()
 
         // browser.browserAction.setIcon({path: {16: enabled ? "favicon.png" : "favicon-gray.png"}});
         // getImageData(x => browser.browserAction.setIcon({imageData: x}));
-        browser.browserAction.setIcon({imageData: {16: enabled ? color_icon_data : gray_icon_data}});
+        browser.browserAction.setIcon({imageData: {16: enabled ? gray_icon_data : color_icon_data}});
 
         browser.tabs.query({active: true, currentWindow: true, url: "*://*.vstup.info/*"})
             .then(
