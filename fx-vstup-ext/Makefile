@@ -94,3 +94,6 @@ all:
 
 # .PHONY: default
 # default: all
+
+create_tag:
+	git tag v$(VERSION)
